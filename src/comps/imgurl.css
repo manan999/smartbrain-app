@@ -1,0 +1,52 @@
+.big
+{
+	font-size: 2.2rem ;
+	text-align: center; 
+	padding: 0.6em ;
+}
+
+.img-ip
+{
+	font-size: 1.3rem ;
+	padding: 0.5em ;
+	margin : auto auto;
+	width: 68% ;
+	border : none;
+}
+
+.img-ip-btn
+{	font-size: 1.3rem ;
+	width : 25% ;
+	padding: 1em 0.5em ;
+	display: inline-block;
+	color: white ;
+	background-color: #a463f2;
+	transform: translateZ(0) ;
+	border :none ;
+ 	transition:transform 0.25s ease-out ;
+}
+
+.img-ip-btn:hover, .img-ip-btn:focus
+{
+	transform: scale(1.05) ;
+}
+
+.img-ip-btn:active
+{
+	transform: scale(0.9) ;
+}
+
+.inner
+{	padding: 2em ;
+	border-radius: 0.5rem ;
+	box-shadow: 4px 4px 8px 0px rgba( 0, 0, 0, 0.2 ) ;
+	width : 700px;
+	background-color:black;
+	background-image:
+	radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+	radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+	radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+	radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+	background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
+	background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}

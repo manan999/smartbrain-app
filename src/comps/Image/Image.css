@@ -1,0 +1,19 @@
+.disp
+{
+	margin : 0.75rem ;
+}
+
+.outer
+{
+	margin-top: 0.25rem ;
+	position : absolute ;
+}
+
+.bound-box
+{	position: absolute;
+	box-shadow: 0 0 0 3px inset #149df2;
+	display: flex;
+	cursor: pointer;
+	justify-content: center;
+	flex-wrap: wrap; 
+}
