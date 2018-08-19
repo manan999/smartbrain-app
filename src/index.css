@@ -7,12 +7,16 @@ body {
   background: linear-gradient(75deg, #FF5EDF 0%, #04C8DE 100%) ;
   height: 100% ;
   background-attachment: fixed ;
-  overflow: hidden;
 }
 
 html
 {
 	height : 100% ;
+}
+
+::-webkit-scrollbar
+{
+	background : transparent ;
 }
 
 button
