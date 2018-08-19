@@ -1,7 +1,12 @@
+const width = window.screen.availWidth ;
+let num = 150 ;
+if ( width < 800 )
+  num = 60 ;
+
 const conf = {
   particles: {
     number: {
-      value: 237,
+      value: num,
       density: {
         enable: true,
         value_area: 868.0624057955

@@ -8,8 +8,8 @@ const ImgUrl = ( { onChange, onSubmit } ) => {
 			<p className ="big"> This magic brain will detect faces in your pictures.. </p>
 			<div className = "centre">
 				<div className = "inner centre">
-					<input className ="img-ip" type = "text" onChange ={onChange} />
-					<button className = "img-ip-btn link" onClick ={onSubmit} > Detect </button> 
+					<input className ="img-ip" type = "text" onChange ={onChange} placeholder="Enter Image URL" />
+					<button className = "img-ip-btn link" onClick ={onSubmit} > Detect&nbsp; </button> 
 				</div>			
 			</div>
 		</div>

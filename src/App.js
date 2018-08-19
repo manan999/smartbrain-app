@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Signup from './comps/Signup.js' ;
+import Signout from './comps/Signout.js' ;
+import Signin from './comps/Signin/Sign.js' ;
 import Logo from './comps/Logo.js' ;
 import Rank from './comps/Rank.js' ;
+import Register from './comps/Registration/Register.js'
 import ImgUrl from './comps/ImgUrl.js' ;
 import Particles from 'react-particles-js';
 import conf from './conf.js' ;
@@ -18,6 +20,7 @@ class App extends Component {
       input : '' ,
       imageUrl : '' ,
       box: {} ,
+      route : 'signin' ,
     }
   }
 
@@ -59,19 +62,42 @@ class App extends Component {
     } ) ;
   }
 
+  onRouteChange = (route) => {
+      this.setState({route : route}) ;
+  }
 
   render() {
-    return (
-      <div className="App">
-        <Particles className = 'particle' params={conf}/>
-        <Signup />
-        <Logo />
-        <Rank />
-        <ImgUrl onChange={this.onChange} onSubmit={this.onSubmit}/>
-        <Image box={this.state.box} imageUrl={this.state.imageUrl} /> 
-      </div>
-    );
-  }
+    if (this.state.route === 'signin')
+    {  return (
+        <div className="App">
+          <Particles className = 'particle' params={conf}/>
+          <Logo />
+          <Signin onRouteChange={this.onRouteChange}/>
+        </div> 
+        );
+    }
+    else if (this.state.route === 'home') 
+    {  return (
+        <div className="App">
+          <Particles className = 'particle' params={conf}/>
+          <Signout onRouteChange={this.onRouteChange}/>
+          <Logo />
+          <Rank />
+          <ImgUrl onChange={this.onChange} onSubmit={this.onSubmit}/>
+          <Image box={this.state.box} imageUrl={this.state.imageUrl} /> 
+        </div> 
+        ) ;
+    } 
+    else if (this.state.route === 'register')
+    {  return (
+          <div className="App">
+            <Particles className = 'particle' params={conf}/>
+            <Logo />
+            <Register onRouteChange={this.onRouteChange}/>
+          </div>
+          ) ;
+    } 
+  } 
 }
 
 export default App;
