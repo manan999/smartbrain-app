@@ -12,20 +12,39 @@ import Image from './comps/Image/Image.js' ;
 
 const app = new Clarifai.App( { apiKey: 'd02a5e896fff4268b32239283970c7c6' } );
 
-class App extends Component {
-  constructor()
-  {
-    super() ;
-    this.state = {
+const initState = {
       input : '' ,
       imageUrl : '' ,
       box: {} ,
       route : 'signin' ,
-    }
+      user : {
+        id : '', 
+        name : '', 
+        email : '',
+        entries : 0 ,
+        joined : ''
+      } ,
+} ;
+
+class App extends Component {
+  constructor()
+  {
+    super() ;
+    this.state =  initState ;
+  }
+
+  loadUser = (info) => {
+    this.setState({user :{
+      id : info.id, 
+      name : info.name, 
+      email : info.email,
+      entries : info.entries,
+      joined : info.joined 
+    }}) ;
   }
 
   onChange = (event) => {
-    console.log(event.target.value) ;
+    // For Debugging only   console.log(event.target.value) ;
     this.setState({input : event.target.value}) ;
   }
   
@@ -48,13 +67,32 @@ class App extends Component {
   }
 
   onSubmit = () => {
+    //let i = 0 ;
     console.log("Detecting..") ;
     this.setState({imageUrl : this.state.input}) ;
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then( (response) => {
-      console.log("Detected..!\n") ;
-      let loc = this.calcFaceBox( response.outputs[0].data.regions[0].region_info.bounding_box ) ;
-      this.drawFaceBox(loc) ;
+      if (response)
+      { console.log("Detected..!\n") ;
+        fetch('https://magic-brain-api.herokuapp.com/image' , {
+          method : 'put',
+          headers : { 'Content-Type' : 'application/json'} ,
+          body : JSON.stringify({
+            id : this.state.user.id ,
+          })
+        })
+         .then(res => res.json()) 
+         .then(data => {
+          this.setState(Object.assign(this.state.user, { entries : data} )) 
+          } )
+         .catch(err => console.log(err)) ;
+      }
+      //let j = response.outputs[0].data.regions.length ;
+      //for ( i = 0 ; i < j ; ++i )
+      //{
+       let loc = this.calcFaceBox( response.outputs[0].data.regions[0].region_info.bounding_box ) ;
+        this.drawFaceBox(loc) ;
+      //}
     } )
     .catch(err => {
       console.log("Haww...Error\n") ;
@@ -63,7 +101,9 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
-      this.setState({route : route}) ;
+    if ( route === 'signin' )
+      this.setState(initState) ;
+    this.setState({route : route}) ;
   }
 
   render() {
@@ -72,7 +112,7 @@ class App extends Component {
         <div className="App">
           <Particles className = 'particle' params={conf}/>
           <Logo />
-          <Signin onRouteChange={this.onRouteChange}/>
+          <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
         </div> 
         );
     }
@@ -82,7 +122,7 @@ class App extends Component {
           <Particles className = 'particle' params={conf}/>
           <Signout onRouteChange={this.onRouteChange}/>
           <Logo />
-          <Rank />
+          <Rank name = {this.state.user.name} entries = {this.state.user.entries} />
           <ImgUrl onChange={this.onChange} onSubmit={this.onSubmit}/>
           <Image box={this.state.box} imageUrl={this.state.imageUrl} /> 
         </div> 
@@ -93,7 +133,7 @@ class App extends Component {
           <div className="App">
             <Particles className = 'particle' params={conf}/>
             <Logo />
-            <Register onRouteChange={this.onRouteChange}/>
+            <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
           </div>
           ) ;
     } 
